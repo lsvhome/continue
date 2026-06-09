@@ -83,9 +83,13 @@ const formatMessageForO1OrGpt5ForResponses = (
         } else if (Array.isArray(content)) {
           const parts: ResponseInputMessageContentList = content
             .filter(
-              (p): p is { type: "text"; text: string } => p.type === "text",
+              (p: any): p is { type: "text"; text: string } =>
+                p.type === "text",
             )
-            .map((p) => ({ type: "input_text" as const, text: p.text }));
+            .map((p: { type: "text"; text: string }) => ({
+              type: "input_text" as const,
+              text: p.text,
+            }));
           pushMessage("developer", parts.length ? parts : "");
         }
         break;
@@ -129,9 +133,10 @@ const formatMessageForO1OrGpt5ForResponses = (
         } else if (Array.isArray(content)) {
           const text = content
             .filter(
-              (p): p is { type: "text"; text: string } => p.type === "text",
+              (p: any): p is { type: "text"; text: string } =>
+                p.type === "text",
             )
-            .map((p) => p.text)
+            .map((p: { type: "text"; text: string }) => p.text)
             .join("");
           if (text.length) pushMessage("assistant", text);
         }
@@ -165,9 +170,10 @@ const formatMessageForO1OrGpt5ForResponses = (
             ? content
             : content
                 .filter(
-                  (p): p is { type: "text"; text: string } => p.type === "text",
+                  (p: any): p is { type: "text"; text: string } =>
+                    p.type === "text",
                 )
-                .map((p) => p.text)
+                .map((p: { type: "text"; text: string }) => p.text)
                 .join("");
         input.push({
           type: "function_call_output",

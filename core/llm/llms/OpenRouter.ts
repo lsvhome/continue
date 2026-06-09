@@ -142,7 +142,7 @@ class OpenRouter extends OpenAI {
     });
 
     // Modify messages to add cache_control
-    body.messages = body.messages.map((message: any, idx) => {
+    body.messages = body.messages.map((message: any, idx: number) => {
       // Handle system message caching
       if (message.role === "system" && shouldCacheSystemMessage) {
         return {

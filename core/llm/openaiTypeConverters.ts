@@ -11,12 +11,10 @@ import {
 import type {
   EasyInputMessage,
   Response as OpenAIResponse,
-  ResponseFunctionCallArgumentsDeltaEvent,
   ResponseFunctionToolCall,
   ResponseInput,
   ResponseInputItem,
   ResponseInputMessageContentList,
-  ResponseOutputItem,
   ResponseOutputItemAddedEvent,
   ResponseOutputItemDoneEvent,
   ResponseOutputMessage,
@@ -324,8 +322,8 @@ export function fromChatResponse(response: ChatCompletion): ChatMessage[] {
       role: "assistant",
       content: "",
       toolCalls: message.tool_calls
-        ?.filter((tc) => !tc.type || tc.type === "function")
-        .map((tc) => ({
+        ?.filter((tc: any) => !tc.type || tc.type === "function")
+        .map((tc: any) => ({
           id: tc.id,
           type: "function" as const,
           function: {
@@ -364,8 +362,10 @@ export function fromChatCompletionChunk(
     };
   } else if (delta?.tool_calls) {
     const toolCalls = delta?.tool_calls
-      .filter((tool_call) => !tool_call.type || tool_call.type === "function")
-      .map((tool_call) => ({
+      .filter(
+        (tool_call: any) => !tool_call.type || tool_call.type === "function",
+      )
+      .map((tool_call: any) => ({
         id: tool_call.id,
         type: "function" as const,
         function: {

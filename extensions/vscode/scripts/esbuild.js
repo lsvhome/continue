@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 
 const { writeBuildTimestamp } = require("./utils");
 
@@ -26,6 +27,47 @@ const esbuildConfig = {
   supported: { "dynamic-import": false },
   metafile: true,
   plugins: [
+    {
+      name: "openai-resource-path-compat",
+      setup(build) {
+        // Some installs of openai@5.x contain flattened resource files such as
+        // resources/chat/completions.js but omit nested JS entrypoints such as
+        // resources/chat/completions/completions.js. Remap known nested imports
+        // to their flattened equivalents when the nested file is missing.
+        build.onResolve({ filter: /^\.\// }, (args) => {
+          const isOpenAiResourceImporter = args.importer.includes(
+            `${path.sep}node_modules${path.sep}openai${path.sep}resources${path.sep}`,
+          );
+          if (!isOpenAiResourceImporter || !args.path.endsWith(".js")) {
+            return;
+          }
+
+          const importerDir = path.dirname(args.importer);
+          const nestedFilePath = path.resolve(importerDir, args.path);
+          if (fs.existsSync(nestedFilePath)) {
+            return;
+          }
+
+          const repeatedNameImport = args.path.match(/^\.\/([^/]+)\/\1\.js$/);
+          const indexImport = args.path.match(/^\.\/([^/]+)\/index\.js$/);
+          const fallbackBaseName =
+            repeatedNameImport?.[1] || indexImport?.[1] || null;
+
+          if (!fallbackBaseName) {
+            return;
+          }
+
+          const flattenedFilePath = path.resolve(
+            importerDir,
+            `./${fallbackBaseName}.js`,
+          );
+
+          if (fs.existsSync(flattenedFilePath)) {
+            return { path: flattenedFilePath };
+          }
+        });
+      },
+    },
     {
       name: "on-end-plugin",
       setup(build) {

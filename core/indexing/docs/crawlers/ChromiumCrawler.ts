@@ -1,7 +1,8 @@
 import * as fs from "fs";
 import { URL } from "node:url";
 
-import { Handler, HTTPResponse, Page } from "puppeteer";
+type HTTPResponse = any;
+type Page = any;
 
 // @ts-ignore
 // @prettier-ignore
@@ -80,7 +81,7 @@ export class ChromiumCrawler {
     });
 
     let responseEventOccurred = false;
-    const responseHandler: Handler<HTTPResponse> = (event) =>
+    const responseHandler = (_event: HTTPResponse) =>
       (responseEventOccurred = true);
 
     const responseWatcher = new Promise<void>(function (resolve, reject) {
@@ -161,28 +162,33 @@ export class ChromiumCrawler {
     );
   }
 
-  private async getLinksFromPage(page: Page, curUrl: URL) {
-    const links = await page.$$eval("a", (links) => links.map((a) => a.href));
+  private async getLinksFromPage(page: Page, curUrl: URL): Promise<string[]> {
+    const links = (await page.$$eval("a", (links: any[]) =>
+      links.map((a: any) => a.href),
+    )) as string[];
 
     const cleanedLinks = links
       .map(this.stripHashFromUrl)
       .filter(
-        (newUrl) =>
+        (newUrl: URL | null): newUrl is URL =>
           newUrl !== null &&
           this.isValidHostAndPath(newUrl, curUrl) &&
           newUrl !== curUrl,
       )
-      .map((newUrl) => (newUrl as URL).href);
+      .map((newUrl) => newUrl.href);
 
-    const dedupedLinks = Array.from(new Set(cleanedLinks));
+    const dedupedLinks: string[] = Array.from(new Set(cleanedLinks));
 
     return dedupedLinks;
   }
 
-  private async getLinkGroupsFromPage(page: Page, curUrl: URL) {
+  private async getLinkGroupsFromPage(
+    page: Page,
+    curUrl: URL,
+  ): Promise<string[][]> {
     const links = await this.getLinksFromPage(page, curUrl);
 
-    const groups = links.reduce((acc, link, i) => {
+    const groups = links.reduce<string[][]>((acc, link, i) => {
       const groupIndex = Math.floor(i / this.LINK_GROUP_SIZE);
 
       if (!acc[groupIndex]) {
@@ -192,7 +198,7 @@ export class ChromiumCrawler {
       acc[groupIndex].push(link);
 
       return acc;
-    }, [] as string[][]);
+    }, []);
 
     return groups;
   }
