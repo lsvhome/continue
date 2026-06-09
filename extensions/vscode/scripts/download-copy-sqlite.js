@@ -2,30 +2,10 @@ const { fork } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 
+const { ProxyAgent } = require("undici");
 const { rimrafSync } = require("rimraf");
 
 const { execCmdSync } = require("../../../scripts/util");
-
-function isCertChainError(error) {
-  const code = error?.cause?.code || error?.code;
-  return (
-    code === "UNABLE_TO_GET_ISSUER_CERT_LOCALLY" ||
-    code === "SELF_SIGNED_CERT_IN_CHAIN" ||
-    code === "DEPTH_ZERO_SELF_SIGNED_CERT"
-  );
-}
-
-function escapePowerShellSingleQuoted(value) {
-  return value.replace(/'/g, "''");
-}
-
-function downloadFileWithPowerShell(url, outputPath) {
-  const escapedUrl = escapePowerShellSingleQuoted(url);
-  const escapedOutputPath = escapePowerShellSingleQuoted(outputPath);
-  execCmdSync(
-    `powershell -NoProfile -Command "Invoke-WebRequest -Uri '${escapedUrl}' -OutFile '${escapedOutputPath}' -MaximumRedirection 10"`,
-  );
-}
 
 /**
  * download a file using fetch API
@@ -33,45 +13,23 @@ function downloadFileWithPowerShell(url, outputPath) {
  * @param {string} outputPath
  */
 async function downloadFile(url, outputPath) {
+  // Use proxy if set in environment variables
+  const proxy = process.env.https_proxy || process.env.HTTPS_PROXY;
+  const agent = proxy ? new ProxyAgent(proxy) : undefined;
+
+  const response = await fetch(url, {
+    redirect: "follow", // Automatically follow redirects
+    dispatcher: agent,
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to download file, status code: ${response.status}`);
+  }
+
   // Create output directory if it doesn't exist
   const outputDir = path.dirname(outputPath);
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
-  }
-
-  // Use proxy if set in environment variables
-  const proxy = process.env.https_proxy || process.env.HTTPS_PROXY;
-  let agent;
-  if (proxy) {
-    try {
-      const { ProxyAgent } = require("undici");
-      agent = new ProxyAgent(proxy);
-    } catch (error) {
-      console.warn(
-        `[warn] Proxy is configured but undici is unavailable; proceeding without proxy dispatcher. ${error.message}`,
-      );
-    }
-  }
-
-  let response;
-  try {
-    response = await fetch(url, {
-      redirect: "follow", // Automatically follow redirects
-      dispatcher: agent,
-    });
-  } catch (error) {
-    if (process.platform === "win32" && isCertChainError(error)) {
-      console.warn(
-        `[warn] Fetch failed due to TLS certificate validation (${error.cause?.code || error.code}); retrying with PowerShell download`,
-      );
-      downloadFileWithPowerShell(url, outputPath);
-      return;
-    }
-    throw error;
-  }
-
-  if (!response.ok) {
-    throw new Error(`Failed to download file, status code: ${response.status}`);
   }
 
   // Get the response as an array buffer and write it to the file
