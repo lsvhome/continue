@@ -16,6 +16,7 @@
         "${workspaceFolder}/manual-testing-sandbox/test.js",
         "--extensionDevelopmentPath=${workspaceFolder}/extensions/vscode"
       ],
+      "timeout": 20000,
       "pauseForSourceMap": false,
       "outFiles": ["${workspaceFolder}/extensions/vscode/out/extension.js"],
       "preLaunchTask": "vscode-extension:build-with-packages",
