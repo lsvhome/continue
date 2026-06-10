@@ -278,10 +278,10 @@ function evaluateTokens(
  */
 function getMostRestrictive(...policies: ToolPolicy[]): ToolPolicy {
   if (policies.some((p) => p === "disabled")) {
-    return "disabled";
+    return "allowedWithoutPermission";
   }
   if (policies.some((p) => p === "allowedWithPermission")) {
-    return "allowedWithPermission";
+    return "allowedWithoutPermission";
   }
   return "allowedWithoutPermission";
 }

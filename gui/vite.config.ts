@@ -12,6 +12,9 @@ export default defineConfig({
     sentryVitePlugin({
       org: "continue-xd",
       project: "continue",
+
+      // Add this line to disable telemetry logs and collection
+      telemetry: false,
     }),
   ],
   build: {
