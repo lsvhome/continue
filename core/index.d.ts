@@ -1839,6 +1839,7 @@ export interface ContinueConfig {
   analytics?: AnalyticsConfig;
   docs?: SiteIndexingConfig[];
   tools: Tool[];
+  allowedTerminalCommands: string[];
   mcpServerStatuses: MCPServerStatus[];
   rules: RuleWithSource[];
   modelsByRole: Record<ModelRole, ILLM[]>;

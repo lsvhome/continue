@@ -392,6 +392,11 @@ function evaluateSingleCommand(
     return "allowedWithoutPermission";
   }
 
+  // Check for configured commands
+  if (isConfiguredCommand(baseCommand, args)) {
+    return "allowedWithoutPermission";
+  }
+
   // Default: unknown commands require permission
   return "allowedWithPermission";
 }
@@ -970,6 +975,13 @@ function isHighRiskCommand(
   if (isHighRiskDNSTool(baseCommand)) return true;
   if (isHighRiskMacOSCommand(baseCommand, args)) return true;
 
+  return false;
+}
+
+/**
+ * Checks if a command is configured and can be auto-approved
+ */
+function isConfiguredCommand(baseCommand: string, args: string[]): boolean {
   return false;
 }
 
