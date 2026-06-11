@@ -1162,6 +1162,7 @@ export class Core {
             basePolicy,
             parsedArgs,
             processedArgs,
+            config.allowedTerminalCommands,
           );
           return { policy: evaluatedPolicy, displayValue };
         }

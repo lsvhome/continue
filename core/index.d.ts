@@ -1165,6 +1165,7 @@ export interface Tool {
     basePolicy: ToolPolicy,
     parsedArgs: Record<string, unknown>,
     processedArgs?: Record<string, unknown>,
+    allowedTerminalCommands?: string[],
   ) => ToolPolicy;
   mcpMeta?: McpToolMeta;
 }

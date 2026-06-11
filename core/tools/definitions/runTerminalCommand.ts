@@ -65,10 +65,13 @@ export const runTerminalCommandTool: Tool = {
   evaluateToolCallPolicy: (
     basePolicy: ToolPolicy,
     parsedArgs: Record<string, unknown>,
+    _processedArgs?: Record<string, unknown>,
+    allowedTerminalCommands?: string[],
   ): ToolPolicy => {
     return evaluateTerminalCommandSecurity(
       basePolicy,
       parsedArgs.command as string,
+      allowedTerminalCommands,
     );
   },
   systemMessageDescription: {

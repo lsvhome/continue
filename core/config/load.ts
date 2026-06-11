@@ -504,6 +504,7 @@ async function intermediateToFinalConfig({
     ...config,
     contextProviders,
     tools: getBaseToolDefinitions(),
+    allowedTerminalCommands: [],
     mcpServerStatuses: [],
     slashCommands: [],
     modelsByRole: {

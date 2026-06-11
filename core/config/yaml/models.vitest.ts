@@ -81,6 +81,7 @@ describe("llmsFromModelConfig requestOptions merging", () => {
       },
       slashCommands: [],
       tools: [],
+      allowedTerminalCommands: [],
       allowAnonymousTelemetry: false,
     } as ContinueConfig;
     vi.clearAllMocks();

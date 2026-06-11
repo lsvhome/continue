@@ -195,6 +195,7 @@ export async function configYamlToContinueConfig(options: {
   const continueConfig: ContinueConfig = {
     slashCommands: [],
     tools: getBaseToolDefinitions(),
+    allowedTerminalCommands: [],
     mcpServerStatuses: [],
     contextProviders: [],
     modelsByRole: {

@@ -32,6 +32,7 @@ type ParsedToken = string | ShellOperator | GlobPattern | CommentToken;
 export function evaluateTerminalCommandSecurity(
   basePolicy: ToolPolicy,
   command: string | null | undefined,
+  allowedTerminalCommands?: string[],
 ): ToolPolicy {
   // If tool is already disabled, keep it disabled
   if (basePolicy === "disabled") {
@@ -72,6 +73,7 @@ export function evaluateTerminalCommandSecurity(
           tokens,
           basePolicy,
           trimmedLine,
+          allowedTerminalCommands,
         );
 
         // Track the most restrictive policy
@@ -93,10 +95,16 @@ export function evaluateTerminalCommandSecurity(
     const tokens = parse(normalizedCommand);
 
     // Evaluate security of the parsed tokens
-    return evaluateTokensSecurity(tokens, basePolicy, normalizedCommand);
+    return evaluateTokensSecurity(
+      tokens,
+      basePolicy,
+      normalizedCommand,
+      allowedTerminalCommands,
+    );
   } catch (error) {
     // If parsing fails, be conservative and require permission
-    console.error("Failed to parse command:", error);
+    // Intentionally avoid logging here to keep this package runtime-agnostic
+    // across environments with different global type libraries.
     return "allowedWithPermission";
   }
 }
@@ -129,6 +137,7 @@ function evaluateTokensSecurity(
   tokens: ParsedToken[],
   basePolicy: ToolPolicy,
   originalCommand: string,
+  allowedTerminalCommands?: string[],
 ): ToolPolicy {
   // Check for empty strings that might indicate variable expansion
   const hasEmptyStrings = tokens.some((t) => typeof t === "string" && t === "");
@@ -148,13 +157,19 @@ function evaluateTokensSecurity(
         tokens,
         basePolicy,
         originalCommand,
+        allowedTerminalCommands,
       );
 
       // 2. Evaluate without empty strings
       const tokensWithoutEmpty = tokens.filter((t) => t !== "");
       const policyWithoutEmpty =
         tokensWithoutEmpty.length > 0
-          ? evaluateTokens(tokensWithoutEmpty, basePolicy, originalCommand)
+          ? evaluateTokens(
+              tokensWithoutEmpty,
+              basePolicy,
+              originalCommand,
+              allowedTerminalCommands,
+            )
           : basePolicy;
 
       // Variable expansion always requires at least permission
@@ -167,7 +182,12 @@ function evaluateTokensSecurity(
   }
 
   // Normal evaluation for commands without variable expansion
-  return evaluateTokens(tokens, basePolicy, originalCommand);
+  return evaluateTokens(
+    tokens,
+    basePolicy,
+    originalCommand,
+    allowedTerminalCommands,
+  );
 }
 
 /**
@@ -177,6 +197,7 @@ function evaluateTokens(
   tokens: ParsedToken[],
   basePolicy: ToolPolicy,
   originalCommand: string,
+  allowedTerminalCommands?: string[],
 ): ToolPolicy {
   let mostRestrictivePolicy = basePolicy;
   let currentCommand: string[] = [];
@@ -196,6 +217,7 @@ function evaluateTokens(
         const commandPolicy = evaluateSingleCommand(
           currentCommand,
           originalCommand,
+          allowedTerminalCommands,
         );
         mostRestrictivePolicy = getMostRestrictive(
           mostRestrictivePolicy,
@@ -235,6 +257,7 @@ function evaluateTokens(
     const commandPolicy = evaluateSingleCommand(
       currentCommand,
       originalCommand,
+      allowedTerminalCommands,
     );
     mostRestrictivePolicy = getMostRestrictive(
       mostRestrictivePolicy,
@@ -247,7 +270,11 @@ function evaluateTokens(
   if (hasCommandSubstitution(originalCommand)) {
     const substitutedCommands = extractSubstitutedCommands(originalCommand);
     for (const subCmd of substitutedCommands) {
-      const nestedPolicy = evaluateTerminalCommandSecurity(basePolicy, subCmd);
+      const nestedPolicy = evaluateTerminalCommandSecurity(
+        basePolicy,
+        subCmd,
+        allowedTerminalCommands,
+      );
       mostRestrictivePolicy = getMostRestrictive(
         mostRestrictivePolicy,
         nestedPolicy,
@@ -362,6 +389,7 @@ function evaluatePipeChain(
 function evaluateSingleCommand(
   commandTokens: string[],
   originalCommand: string,
+  allowedTerminalCommands?: string[],
 ): ToolPolicy {
   if (commandTokens.length === 0) {
     return "allowedWithoutPermission";
@@ -393,7 +421,7 @@ function evaluateSingleCommand(
   }
 
   // Check for configured commands
-  if (isConfiguredCommand(baseCommand, args)) {
+  if (isConfiguredCommand(allowedTerminalCommands, baseCommand, args)) {
     return "allowedWithoutPermission";
   }
 
@@ -981,8 +1009,23 @@ function isHighRiskCommand(
 /**
  * Checks if a command is configured and can be auto-approved
  */
-function isConfiguredCommand(baseCommand: string, args: string[]): boolean {
-  return false;
+function isConfiguredCommand(
+  allowedTerminalCommands: string[] | undefined,
+  baseCommand: string,
+  args: string[],
+): boolean {
+  if (!allowedTerminalCommands?.length) {
+    return false;
+  }
+
+  const fullCommand = [baseCommand, ...args].join(" ").toLowerCase();
+
+  return allowedTerminalCommands.some((allowedCommand) => {
+    const normalizedAllowed = allowedCommand.trim().toLowerCase();
+    return (
+      normalizedAllowed === baseCommand || normalizedAllowed === fullCommand
+    );
+  });
 }
 
 /**
