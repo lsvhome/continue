@@ -1,0 +1,16 @@
+[
+  {
+    "sessionId": "8a8ce5d1-83be-412f-aa07-363c0bfeb0f3",
+    "title": "/run dotnet --list-sdks",
+    "dateCreated": "1781131239471",
+    "workspaceDirectory": "file:///home/ubuntu/git/continue/manual-testing-sandbox",
+    "messageCount": 4
+  },
+  {
+    "sessionId": "60e6e6cf-f58a-4f05-8402-6b0afe8eb455",
+    "title": "/run dotnet --list-sdks",
+    "dateCreated": "1781132313431",
+    "workspaceDirectory": "file:///home/ubuntu/git/continue/manual-testing-sandbox",
+    "messageCount": 7
+  }
+]

@@ -1,0 +1,102 @@
+name: Local Config
+version: 1.0.0
+schema: v1
+models:
+  - name: llama3.2
+    provider: ollama
+    model: llama3.2
+    apiBase: http://localhost:11434
+    roles:
+      - chat
+      - edit
+      - apply
+      - autocomplete
+      - embed
+      - rerank
+    capabilities:
+      - chat
+      - tools
+      - tool_use
+    #      - embed
+    #      - rerank
+    toolCallStrategy: auto
+
+  - name: ph4
+    provider: ollama
+    model: phi4
+    apiBase: http://localhost:11434
+    roles:
+      - chat
+      - edit
+      - apply
+      - autocomplete
+      - embed
+      - rerank
+    capabilities:
+      - chat
+      - tools
+      - tool_use
+      - embed
+      - rerank
+    toolCallStrategy: auto
+context:
+  - provider: code
+  - provider: docs
+  - provider: diff
+  - provider: terminal
+  - provider: problems
+  - provider: folder
+  - provider: codebase
+# 2. Спеціальна легка модель для автодоповнення коду на льоту (Tab-autocomplete)
+tabAutocompleteModel:
+  title: "Qwen 2.5 Coder 1.5B"
+  provider: "ollama"
+  model: "qwen2.5-coder:1.5b"
+  capabilities:
+    - autocomplete
+
+# 3. Модель для генерації ембеддінгів (потрібна для роботи @Codebase)
+embeddingsProvider:
+  provider: "ollama"
+  model: "nomic-embed-text"
+  capabilities:
+    - embeddings
+
+# 4. Глобальне увімкнення системних інструментів (для виконання команд у терміналі)
+tools:
+  - type: terminal
+    enabled: true
+  - name: run_terminal_command
+    policy: automatic # Дозволяє автоматичний запуск скриптів та команд без запиту
+
+  # Якщо ви підключили зовнішні сервери через MCP (Model Context Protocol):
+  #- name: mcp-server-name/execute_script
+  #  policy: automatic
+
+# 5. Налаштування контекстних провайдерів (що ШІ може бачити через символ @)
+contextProviders:
+  - name: "codebase"
+    params:
+      nRetrieve: 25 # Кількість фрагментів коду, які шукаються в проєкті
+  - name: "files"
+  - name: "terminal"
+  - name: "problems"
+
+# 6. Корисні швидкі команди (Slash Commands)
+slashCommands:
+  - name: "edit"
+    description: "Редагувати виділений код1"
+  - name: "comment"
+    description: "Додати коментарі та документацію до коду2"
+  - name: "share"
+    description: "Експортувати поточну сесію чату в Markdown3"
+
+# MCP Servers that Continue can access
+# https://docs.continue.dev/customization/mcp-tools
+#mcpServers:
+#  - uses: anthropic/memory-mcp
+
+# - name: Autodetect
+#   provider: ollama
+#   apiBase: http://localhost:11434
+#   model: AUTODETECT

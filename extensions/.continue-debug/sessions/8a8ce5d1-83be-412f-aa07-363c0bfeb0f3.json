@@ -1,0 +1,403 @@
+{
+  "sessionId": "8a8ce5d1-83be-412f-aa07-363c0bfeb0f3",
+  "title": "/run dotnet --list-sdks",
+  "workspaceDirectory": "file:///home/ubuntu/git/continue/manual-testing-sandbox",
+  "history": [
+    {
+      "message": {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "/run dotnet --list-sdks"
+          }
+        ],
+        "id": "2440ab1c-3060-4f3f-a8ba-988923e2dd19"
+      },
+      "contextItems": [],
+      "editorState": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "/run dotnet --list-sdks"
+              }
+            ]
+          }
+        ]
+      },
+      "appliedRules": []
+    },
+    {
+      "message": {
+        "id": "e15fe9ea-d5a2-40f4-82ad-1588ca066cb0",
+        "role": "assistant",
+        "content": "",
+        "toolCalls": [
+          {
+            "id": "tc_378dac64-48f0-4c31-9ae3-e8628eb191b5",
+            "type": "function",
+            "function": {
+              "name": "run_terminal_command",
+              "arguments": "{\"command\":\"/run dotnet --list-sdks\",\"waitForCompletion\":\"true\"}"
+            }
+          }
+        ]
+      },
+      "contextItems": [],
+      "toolCallStates": [
+        {
+          "status": "canceled",
+          "toolCall": {
+            "id": "tc_378dac64-48f0-4c31-9ae3-e8628eb191b5",
+            "type": "function",
+            "function": {
+              "name": "run_terminal_command",
+              "arguments": "{\"command\":\"/run dotnet --list-sdks\",\"waitForCompletion\":\"true\"}"
+            }
+          },
+          "toolCallId": "tc_378dac64-48f0-4c31-9ae3-e8628eb191b5",
+          "parsedArgs": {
+            "command": "/run dotnet --list-sdks",
+            "waitForCompletion": "true"
+          },
+          "tool": {
+            "type": "function",
+            "displayTitle": "Run Terminal Command",
+            "wouldLikeTo": "run the following terminal command:",
+            "isCurrently": "running the following terminal command:",
+            "hasAlready": "ran the following terminal command:",
+            "readonly": false,
+            "group": "Built-In",
+            "function": {
+              "name": "run_terminal_command",
+              "description": "Run a terminal command in the current directory.\nThe shell is not stateful and will not remember any previous commands.      When a command is run in the background ALWAYS suggest using shell commands to stop it; NEVER suggest using Ctrl+C.      When suggesting subsequent shell commands ALWAYS format them in shell command blocks.      Do NOT perform actions requiring special/admin privileges.      IMPORTANT: To edit files, use Edit/MultiEdit tools instead of bash commands (sed, awk, etc).      Choose terminal commands and scripts optimized for linux and x64 and shell /bin/bash.",
+              "parameters": {
+                "type": "object",
+                "required": [
+                  "command"
+                ],
+                "properties": {
+                  "command": {
+                    "type": "string",
+                    "description": "The command to run. This will be passed directly into the IDE shell."
+                  },
+                  "waitForCompletion": {
+                    "type": "boolean",
+                    "description": "Whether to wait for the command to complete before returning. Default is true. Set to false to run the command in the background. Set to true to run the command in the foreground and wait to collect the output."
+                  }
+                }
+              }
+            },
+            "defaultToolPolicy": "allowedWithPermission",
+            "systemMessageDescription": {
+              "prefix": "To run a terminal command, use the run_terminal_command tool\nThe shell is not stateful and will not remember any previous commands.      When a command is run in the background ALWAYS suggest using shell commands to stop it; NEVER suggest using Ctrl+C.      When suggesting subsequent shell commands ALWAYS format them in shell command blocks.      Do NOT perform actions requiring special/admin privileges.      IMPORTANT: To edit files, use Edit/MultiEdit tools instead of bash commands (sed, awk, etc).      Choose terminal commands and scripts optimized for linux and x64 and shell /bin/bash.\nYou can also optionally include the waitForCompletion argument set to false to run the command in the background.      \nFor example, to see the git log, you could respond with:",
+              "exampleArgs": [
+                [
+                  "command",
+                  "git log"
+                ]
+              ]
+            }
+          }
+        }
+      ],
+      "promptLogs": [
+        {
+          "modelTitle": "llama3.2",
+          "modelProvider": "ollama",
+          "prompt": "<system>\n<important_rules>\n  You are in agent mode.\n\n  If you need to use multiple tools, you can call multiple read-only tools simultaneously.\n\n  Always include the language and file name in the info string when you write code blocks.\n  If you are editing \"src/main.py\" for example, your code block should start with '```python src/main.py'\n\n\nFor larger codeblocks (>20 lines), use brief language-appropriate placeholders for unmodified sections, e.g. '// ... existing code ...'\n\nHowever, only output codeblocks for suggestion and demonstration purposes, for example, when enumerating multiple hypothetical options. For implementing changes, use the edit tools.\n\n</important_rules>\n\n<user>\n/run dotnet --list-sdks\n\n",
+          "completion": "<assistant>\n\nrun_terminal_command({\"command\":\"/run dotnet --list-sdks\",\"waitForCompletion\":\"true\"})\n\n<assistant>\n\n\n"
+        }
+      ],
+      "isGatheringContext": false
+    },
+    {
+      "message": {
+        "role": "tool",
+        "content": "",
+        "toolCallId": "tc_378dac64-48f0-4c31-9ae3-e8628eb191b5",
+        "id": "0fabda36-88f7-4b51-8dd0-fd6a5c7b774b"
+      },
+      "contextItems": []
+    },
+    {
+      "message": {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "/run git log"
+          }
+        ],
+        "id": "d85577f7-feb2-4e1c-a82a-d63a37b51daa"
+      },
+      "contextItems": [],
+      "editorState": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "/run git log"
+              }
+            ]
+          },
+          {
+            "type": "paragraph"
+          }
+        ]
+      },
+      "appliedRules": []
+    },
+    {
+      "message": {
+        "id": "4fcdf03e-0e83-4872-a420-be4e1aae3922",
+        "role": "assistant",
+        "content": "",
+        "toolCalls": [
+          {
+            "id": "tc_e7d39219-6225-477b-8f90-89abeaf75ee8",
+            "type": "function",
+            "function": {
+              "name": "run_terminal_command",
+              "arguments": "{\"command\":\"/run git log\",\"waitForCompletion\":\"true\"}"
+            }
+          }
+        ]
+      },
+      "contextItems": [],
+      "toolCallStates": [
+        {
+          "status": "canceled",
+          "toolCall": {
+            "id": "tc_e7d39219-6225-477b-8f90-89abeaf75ee8",
+            "type": "function",
+            "function": {
+              "name": "run_terminal_command",
+              "arguments": "{\"command\":\"/run git log\",\"waitForCompletion\":\"true\"}"
+            }
+          },
+          "toolCallId": "tc_e7d39219-6225-477b-8f90-89abeaf75ee8",
+          "parsedArgs": {
+            "command": "/run git log",
+            "waitForCompletion": "true"
+          },
+          "tool": {
+            "type": "function",
+            "displayTitle": "Run Terminal Command2",
+            "wouldLikeTo": "run the following terminal command:",
+            "isCurrently": "running the following terminal command:",
+            "hasAlready": "ran the following terminal command:",
+            "readonly": false,
+            "group": "Built-In",
+            "function": {
+              "name": "run_terminal_command",
+              "description": "Run a terminal command in the current directory.\nThe shell is not stateful and will not remember any previous commands.      When a command is run in the background ALWAYS suggest using shell commands to stop it; NEVER suggest using Ctrl+C.      When suggesting subsequent shell commands ALWAYS format them in shell command blocks.      Do NOT perform actions requiring special/admin privileges.      IMPORTANT: To edit files, use Edit/MultiEdit tools instead of bash commands (sed, awk, etc).      Choose terminal commands and scripts optimized for linux and x64 and shell /bin/bash.",
+              "parameters": {
+                "type": "object",
+                "required": [
+                  "command"
+                ],
+                "properties": {
+                  "command": {
+                    "type": "string",
+                    "description": "The command to run. This will be passed directly into the IDE shell."
+                  },
+                  "waitForCompletion": {
+                    "type": "boolean",
+                    "description": "Whether to wait for the command to complete before returning. Default is true. Set to false to run the command in the background. Set to true to run the command in the foreground and wait to collect the output."
+                  }
+                }
+              }
+            },
+            "defaultToolPolicy": "allowedWithoutPermission",
+            "systemMessageDescription": {
+              "prefix": "To run a terminal command, use the run_terminal_command tool\nThe shell is not stateful and will not remember any previous commands.      When a command is run in the background ALWAYS suggest using shell commands to stop it; NEVER suggest using Ctrl+C.      When suggesting subsequent shell commands ALWAYS format them in shell command blocks.      Do NOT perform actions requiring special/admin privileges.      IMPORTANT: To edit files, use Edit/MultiEdit tools instead of bash commands (sed, awk, etc).      Choose terminal commands and scripts optimized for linux and x64 and shell /bin/bash.\nYou can also optionally include the waitForCompletion argument set to false to run the command in the background.      \nFor example, to see the git log, you could respond with:",
+              "exampleArgs": [
+                [
+                  "command",
+                  "git log"
+                ]
+              ]
+            }
+          }
+        }
+      ],
+      "promptLogs": [
+        {
+          "modelTitle": "llama3.2",
+          "modelProvider": "ollama",
+          "prompt": "<system>\n<important_rules>\n  You are in agent mode.\n\n  If you need to use multiple tools, you can call multiple read-only tools simultaneously.\n\n  Always include the language and file name in the info string when you write code blocks.\n  If you are editing \"src/main.py\" for example, your code block should start with '```python src/main.py'\n\n\nFor larger codeblocks (>20 lines), use brief language-appropriate placeholders for unmodified sections, e.g. '// ... existing code ...'\n\nHowever, only output codeblocks for suggestion and demonstration purposes, for example, when enumerating multiple hypothetical options. For implementing changes, use the edit tools.\n\n</important_rules>\n\n<user>\n/run dotnet --list-sdks\n\n<assistant>\n \nrun_terminal_command({\"command\":\"/run dotnet --list-sdks\",\"waitForCompletion\":\"true\"})\n\n<tool>\nThe user cancelled this tool call.\n\n<user>\n/run git log\n\n",
+          "completion": "<assistant>\n\nrun_terminal_command({\"command\":\"/run git log\",\"waitForCompletion\":\"true\"})\n\n<assistant>\n\n\n"
+        }
+      ],
+      "isGatheringContext": false
+    },
+    {
+      "message": {
+        "role": "tool",
+        "content": "",
+        "toolCallId": "tc_e7d39219-6225-477b-8f90-89abeaf75ee8",
+        "id": "a9662b4b-d0b9-469c-86c5-dc96ac6e9b5d"
+      },
+      "contextItems": []
+    },
+    {
+      "message": {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "/run git log"
+          }
+        ],
+        "id": "fbab4454-4404-4ebb-859a-0b89ce5ba037"
+      },
+      "contextItems": [],
+      "editorState": {
+        "type": "doc",
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "/run git log"
+              }
+            ]
+          },
+          {
+            "type": "paragraph"
+          }
+        ]
+      },
+      "appliedRules": []
+    },
+    {
+      "message": {
+        "id": "8451ffd7-d369-4745-832c-8251cf3b8eae",
+        "role": "assistant",
+        "content": "",
+        "toolCalls": [
+          {
+            "id": "tc_552dc605-199b-406c-898b-23ccad93568e",
+            "type": "function",
+            "function": {
+              "name": "run_terminal_command",
+              "arguments": "{\"command\":\"/run git log\",\"waitForCompletion\":\"true\"}"
+            }
+          }
+        ]
+      },
+      "contextItems": [],
+      "toolCallStates": [
+        {
+          "status": "done",
+          "toolCall": {
+            "id": "tc_552dc605-199b-406c-898b-23ccad93568e",
+            "type": "function",
+            "function": {
+              "name": "run_terminal_command",
+              "arguments": "{\"command\":\"/run git log\",\"waitForCompletion\":\"true\"}"
+            }
+          },
+          "toolCallId": "tc_552dc605-199b-406c-898b-23ccad93568e",
+          "parsedArgs": {
+            "command": "/run git log",
+            "waitForCompletion": "true"
+          },
+          "tool": {
+            "type": "function",
+            "displayTitle": "Run Terminal Command2",
+            "wouldLikeTo": "run the following terminal command:",
+            "isCurrently": "running the following terminal command:",
+            "hasAlready": "ran the following terminal command:",
+            "readonly": false,
+            "group": "Built-In",
+            "function": {
+              "name": "run_terminal_command",
+              "description": "Run a terminal command in the current directory.\nThe shell is not stateful and will not remember any previous commands.      When a command is run in the background ALWAYS suggest using shell commands to stop it; NEVER suggest using Ctrl+C.      When suggesting subsequent shell commands ALWAYS format them in shell command blocks.      Do NOT perform actions requiring special/admin privileges.      IMPORTANT: To edit files, use Edit/MultiEdit tools instead of bash commands (sed, awk, etc).      Choose terminal commands and scripts optimized for linux and x64 and shell /bin/bash.",
+              "parameters": {
+                "type": "object",
+                "required": [
+                  "command"
+                ],
+                "properties": {
+                  "command": {
+                    "type": "string",
+                    "description": "The command to run. This will be passed directly into the IDE shell."
+                  },
+                  "waitForCompletion": {
+                    "type": "boolean",
+                    "description": "Whether to wait for the command to complete before returning. Default is true. Set to false to run the command in the background. Set to true to run the command in the foreground and wait to collect the output."
+                  }
+                }
+              }
+            },
+            "defaultToolPolicy": "allowedWithoutPermission",
+            "systemMessageDescription": {
+              "prefix": "To run a terminal command, use the run_terminal_command tool\nThe shell is not stateful and will not remember any previous commands.      When a command is run in the background ALWAYS suggest using shell commands to stop it; NEVER suggest using Ctrl+C.      When suggesting subsequent shell commands ALWAYS format them in shell command blocks.      Do NOT perform actions requiring special/admin privileges.      IMPORTANT: To edit files, use Edit/MultiEdit tools instead of bash commands (sed, awk, etc).      Choose terminal commands and scripts optimized for linux and x64 and shell /bin/bash.\nYou can also optionally include the waitForCompletion argument set to false to run the command in the background.      \nFor example, to see the git log, you could respond with:",
+              "exampleArgs": [
+                [
+                  "command",
+                  "git log"
+                ]
+              ]
+            }
+          },
+          "output": [
+            {
+              "name": "Terminal",
+              "description": "Terminal command output",
+              "content": "/bin/bash: line 1: /run: Is a directory\n",
+              "status": "Command failed with exit code 126"
+            }
+          ]
+        }
+      ],
+      "promptLogs": [
+        {
+          "modelTitle": "llama3.2",
+          "modelProvider": "ollama",
+          "prompt": "<system>\n<important_rules>\n  You are in agent mode.\n\n  If you need to use multiple tools, you can call multiple read-only tools simultaneously.\n\n  Always include the language and file name in the info string when you write code blocks.\n  If you are editing \"src/main.py\" for example, your code block should start with '```python src/main.py'\n\n\nFor larger codeblocks (>20 lines), use brief language-appropriate placeholders for unmodified sections, e.g. '// ... existing code ...'\n\nHowever, only output codeblocks for suggestion and demonstration purposes, for example, when enumerating multiple hypothetical options. For implementing changes, use the edit tools.\n\n</important_rules>\n\n<user>\n/run dotnet --list-sdks\n\n<assistant>\n \nrun_terminal_command({\"command\":\"/run dotnet --list-sdks\",\"waitForCompletion\":\"true\"})\n\n<tool>\nThe user cancelled this tool call.\n\n<user>\n/run git log\n\n<assistant>\n \nrun_terminal_command({\"command\":\"/run git log\",\"waitForCompletion\":\"true\"})\n\n<tool>\nThe user cancelled this tool call.\n\n<user>\n/run git log\n\n",
+          "completion": "<assistant>\n\nrun_terminal_command({\"command\":\"/run git log\",\"waitForCompletion\":\"true\"})\n\n<assistant>\n\n\n"
+        }
+      ],
+      "isGatheringContext": false
+    },
+    {
+      "message": {
+        "role": "tool",
+        "content": "/bin/bash: line 1: /run: Is a directory\n",
+        "toolCallId": "tc_552dc605-199b-406c-898b-23ccad93568e",
+        "id": "1d3b623d-9ba8-45b9-828d-0c7db63b8e0d"
+      },
+      "contextItems": []
+    },
+    {
+      "message": {
+        "role": "assistant",
+        "content": "{\"name\": \"run_terminal_command\", \"parameters\": {\"command\":\"git log\",\"waitForCompletion\":\"true\"}}",
+        "id": "d2b850de-1b86-4f67-8bba-8cbde6272709"
+      },
+      "contextItems": [],
+      "promptLogs": [
+        {
+          "modelTitle": "llama3.2",
+          "modelProvider": "ollama",
+          "prompt": "<system>\n<important_rules>\n  You are in agent mode.\n\n  If you need to use multiple tools, you can call multiple read-only tools simultaneously.\n\n  Always include the language and file name in the info string when you write code blocks.\n  If you are editing \"src/main.py\" for example, your code block should start with '```python src/main.py'\n\n\nFor larger codeblocks (>20 lines), use brief language-appropriate placeholders for unmodified sections, e.g. '// ... existing code ...'\n\nHowever, only output codeblocks for suggestion and demonstration purposes, for example, when enumerating multiple hypothetical options. For implementing changes, use the edit tools.\n\n</important_rules>\n\n<user>\n/run dotnet --list-sdks\n\n<assistant>\n \nrun_terminal_command({\"command\":\"/run dotnet --list-sdks\",\"waitForCompletion\":\"true\"})\n\n<tool>\nThe user cancelled this tool call.\n\n<user>\n/run git log\n\n<assistant>\n \nrun_terminal_command({\"command\":\"/run git log\",\"waitForCompletion\":\"true\"})\n\n<tool>\nThe user cancelled this tool call.\n\n<user>\n/run git log\n\n<assistant>\n \nrun_terminal_command({\"command\":\"/run git log\",\"waitForCompletion\":\"true\"})\n\n<tool>\n/bin/bash: line 1: /run: Is a directory\n\n[Status: Command failed with exit code 126]\n\n",
+          "completion": "<assistant>\n{\"\n\n<assistant>\nname\n\n<assistant>\n\":\n\n<assistant>\n \"\n\n<assistant>\nrun\n\n<assistant>\n_terminal\n\n<assistant>\n_command\n\n<assistant>\n\",\n\n<assistant>\n \"\n\n<assistant>\nparameters\n\n<assistant>\n\":\n\n<assistant>\n {\"\n\n<assistant>\ncommand\n\n<assistant>\n\":\"\n\n<assistant>\ngit\n\n<assistant>\n log\n\n<assistant>\n\",\"\n\n<assistant>\nwaitFor\n\n<assistant>\nCompletion\n\n<assistant>\n\":\"\n\n<assistant>\ntrue\n\n<assistant>\n\"}}\n\n<assistant>\n\n\n"
+        }
+      ],
+      "isGatheringContext": false
+    }
+  ],
+  "mode": "agent",
+  "chatModelTitle": "llama3.2"
+}

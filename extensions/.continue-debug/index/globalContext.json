@@ -1,0 +1,21 @@
+{
+  "lastSelectedProfileForWorkspace": {
+    "file:///home/ubuntu/git/continue/manual-testing-sandbox:::personal": "local"
+  },
+  "lastSelectedOrgIdForWorkspace": {
+    "file:///home/ubuntu/git/continue/manual-testing-sandbox": "personal"
+  },
+  "selectedModelsByProfileId": {
+    "local": {
+      "chat": "llama3.2",
+      "edit": "llama3.2",
+      "apply": "llama3.2",
+      "embed": "Transformers.js (Built-In)",
+      "autocomplete": "llama3.2",
+      "rerank": "llama3.2",
+      "summarize": null,
+      "subagent": null
+    }
+  },
+  "isSupportedLanceDbCpuTargetForLinux": true
+}

@@ -162,7 +162,7 @@ extensions/intellij/.idea/**
 
 
 extensions/intellij/bin
-extensions/.continue-debug/
+#extensions/.continue-debug/
 
 *.vsix
 
