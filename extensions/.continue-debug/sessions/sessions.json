@@ -12,5 +12,19 @@
     "dateCreated": "1781132313431",
     "workspaceDirectory": "file:///home/ubuntu/git/continue/manual-testing-sandbox",
     "messageCount": 7
+  },
+  {
+    "sessionId": "dfd44757-4c65-469e-ae2c-4e8d9b18fb3a",
+    "title": "/run_terminal_commad dotnet --list-sdks",
+    "dateCreated": "1781299170956",
+    "workspaceDirectory": "file:///home/ubuntu/git/continue/manual-testing-sandbox",
+    "messageCount": 8
+  },
+  {
+    "sessionId": "7426ac04-2c7e-44f6-9189-95c4e78e2e2a",
+    "title": "/runterminalcommad dotnet --list-sdks",
+    "dateCreated": "1781299978791",
+    "workspaceDirectory": "file:///home/ubuntu/git/continue/manual-testing-sandbox",
+    "messageCount": 16
   }
 ]

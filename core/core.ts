@@ -1151,6 +1151,8 @@ export class Core {
           return { policy: basePolicy };
         }
 
+        const tool1 = config.allowedTerminalCommands?.join(",");
+
         // Extract display value for specific tools
         let displayValue: string | undefined;
         if (toolName === "runTerminalCommand" && parsedArgs.command) {

@@ -293,6 +293,19 @@
       }
     },
     {
+      "label": "system:max-user-watches",
+      "type": "shell",
+      "command": "sudo sysctl -w fs.inotify.max_user_watches=524288",
+      "problemMatcher": [],
+      "presentation": {
+        "group": "build-tasks",
+        "panel": "shared",
+        "reveal": "always",
+        "close": true,
+        "revealProblems": "onProblem"
+      }
+    },
+    {
       "label": "vscode-extension:build-with-packages",
       "dependsOn": ["continue-packages:build", "vscode-extension:build"],
       "type": "shell",

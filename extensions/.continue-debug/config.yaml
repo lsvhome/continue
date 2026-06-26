@@ -67,6 +67,7 @@ tools:
   - type: terminal
     enabled: true
   - name: run_terminal_command
+    enabled: true
     policy: automatic # Дозволяє автоматичний запуск скриптів та команд без запиту
 
   # Якщо ви підключили зовнішні сервери через MCP (Model Context Protocol):
