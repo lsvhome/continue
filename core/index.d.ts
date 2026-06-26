@@ -1671,6 +1671,11 @@ export interface ExperimentalConfig {
   onlyUseSystemMessageTools?: boolean;
 
   /**
+   * !!!Dangerous!!! AI allowed to do anything
+   */
+  autoApproveAllTools: boolean;
+
+  /**
    * Quick actions are a way to add custom commands to the Code Lens of
    * function and class declarations.
    */

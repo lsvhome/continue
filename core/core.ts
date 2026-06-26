@@ -1146,6 +1146,10 @@ export class Core {
           throw new Error("Config not loaded");
         }
 
+        if (config.experimental?.autoApproveAllTools == true) {
+          return { policy: "allowedWithoutPermission" };
+        }
+
         const tool = config.tools.find((t) => t.function.name === toolName);
         if (!tool) {
           return { policy: basePolicy };

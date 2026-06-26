@@ -101,3 +101,5 @@ slashCommands:
 #   provider: ollama
 #   apiBase: http://localhost:11434
 #   model: AUTODETECT
+experimental:
+  - autoApproveAllTools: true;
